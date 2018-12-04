@@ -1,18 +1,19 @@
 //  Author:  Tammy O'Brien
-//  Date:  18 November 2018
+//  Date:  December 03, 2018
 //  Program:  5
 //  Purpose:  Functions file for the superhero condo program
 
 
 #include "prog5.h"
 
+//  FUNCTION TO ENTER HEROES INTO STRUCTURES ARRAY
 int enterHeroes(int maxHeroes, int & currentHeroes, Heroes* &heroList)
 {
 	int menuChoice = 0;
 	
 	if (currentHeroes == maxHeroes)
 	{
-		cout << "Sorry!  Your complex can only hold " << maxHeroes << " heroes.\nYou cannot add more.";
+		cout << endl << "Sorry!  Your complex can only hold " << maxHeroes << " heroes.\nYou cannot add more." << endl << endl;
 	}
 	else
 	{
@@ -32,7 +33,9 @@ int enterHeroes(int maxHeroes, int & currentHeroes, Heroes* &heroList)
 		{
 			case 1 :
 			{
-				string heroFile;
+				string heroFile, heroInfo;
+				
+				string heroName, heroDesc, rentAmt, damageAmt, nbrYears, isDangerous;
 				
 				cout << "\nWhat is the name of the file with your list of superheroes? (ex: filename.txt)\n";
 				cout << "FILENAME:  ";
@@ -44,19 +47,33 @@ int enterHeroes(int maxHeroes, int & currentHeroes, Heroes* &heroList)
 				{
 					cout << "There was an error with your heroes file.\n\n";
 				}
-/*				else
+				else
 				{
-					for (int i = 0; i < maxHeroes; i++)
+					while(!getline(heroesFile, heroName, '#').eof())
 					{
-						heroesFile >> heroes[i].name >> heroes[i].description >> heroes[i].dangerous >> heroes[i].rentInfo.rent >> heroes[i].rentInfo.damage >> heroes[i].rentInfo.years;
+						heroList[currentHeroes].name = heroName;
+						getline(heroesFile, heroDesc, '#');
+						heroList[currentHeroes].description = heroDesc;
+						getline(heroesFile, isDangerous, '#');
+					//	heroList[currentHeroes].dangerous = isDangerous;
+						getline(heroesFile, heroInfo, '#');
+					//	convertToFloat(heroInfo);
+					//	heroList[currentHeroes].rentInfo.rent = heroInfo;
+						getline(heroesFile, heroInfo, '#');
+					//	convertToFloat(heroInfo);
+					//	heroList[currentHeroes].rentInfo.damage = heroInfo;
+						getline(heroesFile, heroInfo, '#');
+					//	convertToFloat[heroInfo);
+					//	heroList[currentHeroes].rentInfo.years = heroInfo;
+						currentHeroes++;
 					}
 				}
-*/				
+	
 				break;
 			}	
 			case 2 :
 			{
-				bool addMore = true, isDangerous;
+				bool addMore = true, isDangerous = true;
 				float rentAmt = 0, damageAmt = 0, nbrYears = 0;
 				char addAnother;
 				string name, description;
@@ -75,12 +92,12 @@ int enterHeroes(int maxHeroes, int & currentHeroes, Heroes* &heroList)
 					cin.sync();
 					cin >> isDangerous;
 					cout << endl << endl <<  "How much does pay for rent per month?";
-					cout << endl << "RENT PRICE:  ";
+					cout << endl << "RENT PRICE:  $";
 					cin.clear();
 					cin.sync();
 					cin >> rentAmt;
 					cout << endl << endl << "What is the typical damage has each month?";
-					cout << endl << "DAMAGE COST:  ";
+					cout << endl << "DAMAGE COST:  $";
 					cin.clear();
 					cin.sync();
 					cin >> damageAmt;
@@ -89,12 +106,11 @@ int enterHeroes(int maxHeroes, int & currentHeroes, Heroes* &heroList)
 					cin.clear();
 					cin.sync();
 					cin >> nbrYears;
-					cout << "NAME:  " << name << endl;
-					cout << "DESC:  " << description << endl;
-					cout << "DANG:  " << isDangerous << endl;
-					cout << "RENT:  " << rentAmt << endl;
-					cout << "DAMG:  " << damageAmt << endl;
-					cout << "YEAR:  " << nbrYears << endl;
+					
+					if (isDangerous == 'y' || isDangerous == 'Y')
+						isDangerous = true;
+					else
+						isDangerous = false;
 					
 					heroList[currentHeroes].name = name;
 					heroList[currentHeroes].description = description;
@@ -106,7 +122,6 @@ int enterHeroes(int maxHeroes, int & currentHeroes, Heroes* &heroList)
 	 
 					cout << endl << endl << "The " << name << " has been added.";
 					currentHeroes++;
-					cout << "Current heroes count " << currentHeroes;
 					
 					cout << endl << endl << "Want to add more heroes?  (y or n)  ";
 					cin >> addAnother;
@@ -114,6 +129,15 @@ int enterHeroes(int maxHeroes, int & currentHeroes, Heroes* &heroList)
 					if (addAnother == 'n' || addAnother == 'N')
 					{
 						addMore = false;
+					}
+					else
+					{
+						if (currentHeroes == maxHeroes)
+						{
+							cout << endl << "Sorry!  Your complex can only hold " << maxHeroes << " heroes.\nYou cannot add more." << endl << endl;
+							addMore = false;
+							break;
+						}
 					}
 					
 				}while(addMore);
@@ -126,18 +150,128 @@ int enterHeroes(int maxHeroes, int & currentHeroes, Heroes* &heroList)
 	}
 }
 
-/*
-void deleteHero(int & currentHeroes, string heroList[])
+
+void deleteHero(int & currentHeroes, Heroes* &heroList)
 {
-	cout << "The following is a list of all the heroes living in your condo complex:\n";
+	string heroToKick;
+	int notFound = 0, kickCounter = 0;
 	
-	cout << "Which hero are you kicking out of your complex?\n";
+	cout << endl << "The following is a list of all the heroes living in your condo complex:\n";
+	
+	for(int i = 0; i < currentHeroes; i++)
+	{
+		cout << heroList[i].name << endl;
+	}
+	
+	cout << endl << "Which hero are you kicking out of your complex?\n";
 	cout << "SUPERHERO NAME:  ";
-}
-
-
-void saveToFile(int currentHeroes, string heroList[])
-{
+	cin.clear();
+	cin.sync();
+	getline(cin, heroToKick);
 	
+	for (int i = 0; i < currentHeroes; i++)
+	{
+		kickCounter++;
+		if (heroToKick == heroList[i].name)
+		{
+			for(int b = kickCounter; b < currentHeroes; b++)
+			{
+				cout << "OLD NAME:  " << heroList[i].name;
+				heroList[i].name = heroList[i+i].name;
+				cout << "NEW NAME:  " << heroList[i].name;
+				heroList[i].description = heroList[i+i].description;
+				heroList[i].dangerous = heroList[i+i].dangerous;
+				heroList[i].rentInfo.rent = heroList[i+i].rentInfo.rent;
+				heroList[i].rentInfo.damage = heroList[i+i].rentInfo.damage;
+				heroList[i].rentInfo.years = heroList[i+i].rentInfo.years;
+			}
+			cout << endl << "You have removed " << heroToKick << endl << endl;
+			currentHeroes--;
+		}	
+		else
+		{
+			notFound++;
+		}
+	}
+	if (notFound == currentHeroes)
+		cout << "Sorry, a hero by the name " << heroToKick << " could not be found." << endl << endl;
 }
-*/
+
+
+
+//  FUNTION TO DISPLAY HEROES TO SCREEN
+void printHeroes(int currentHeroes, Heroes* &heroList)
+{
+	int heroNbr = 1;
+	
+	for(int i = 0; i < currentHeroes; i++)
+	{
+		//cout << setfill('-') << setw(80);
+		cout << endl;
+		cout << setfill(' ') << setw(60) << std::right << "SUPERHERO  " << heroNbr << endl;
+		cout << setw(25) << std::left << "NAME" << setw(16) << std::left << heroList[i].name << endl;
+		cout << setw(25) << std::left << "DESCRIPTON" << setw(16) << std::left << heroList[i].description << endl;
+		cout << boolalpha << setw(25) << std::left << "DANGEROUS" << setw(16) << std::left << heroList[i].dangerous << endl;
+		cout << setw(25) << std::left << "RENT PRICE" << setw(15) << std::left << "$" << setw(1) << std::left << heroList[i].rentInfo.rent << endl;
+		cout << setw(25) << std::left << "DAMAGE COST" << setw(15) << std::left << "$" << setw(1) << std::left << heroList[i].rentInfo.damage << endl;
+		cout << setw(25) << std::left << "YEARS" << setw(16) << std::left << heroList[i].rentInfo.years << endl << endl;
+		heroNbr++;
+	}
+}
+
+
+//  FUNCTION TO PRINT HERO RENT DETAILS TO SCREEN
+void printRentDetails(int currentHeroes, Heroes* &heroList)
+{
+	float rentTotal = 0, damageTotal = 0;
+	
+	cout << "PRINT DETAILS OF EACH HERO:" << endl << endl;
+	cout << setw(20) << std::left << "SUPERHERO" << setw(16) << std::right << "MONTHLY RENT" << setw(20) << std::right << "DAMAGE COST" << endl;
+	
+	for(int i = 0; i < currentHeroes; i++)
+	{
+		rentTotal = rentTotal + heroList[i].rentInfo.rent;
+		damageTotal = damageTotal + heroList[i].rentInfo.damage;
+		
+		cout << setw(20) << std::left << heroList[i].name << "$" << setw(15) << std::right << heroList[i].rentInfo.rent << setw(9) << "$" << setw(11) << std::right << heroList[i].rentInfo.damage << endl;
+	}
+	
+//	cout << setfill('-') << setw(80);
+	cout << endl;
+	cout << setfill(' ') << setw(20) << std:: left << "TOTALS:" << "$" << setw(15) << std::right << rentTotal << setw(9) << "$" << setw(11) << std::right << damageTotal << endl << endl;
+}
+
+
+void saveToFile(int currentHeroes, Heroes* &heroList)
+{
+	string saveFile;
+	
+	cout << "What is the name of the file you want to save your creatures to?\n";
+	cout << "FILENAME:  ";
+	cin >> saveFile;
+	cout << "\n";
+	
+	ofstream saveHeroes(saveFile);
+	for(int i =0; i < currentHeroes; i++)
+	{
+		saveHeroes << heroList[i].name << "#";
+		saveHeroes << heroList[i].description << "#";
+		saveHeroes << heroList[i].dangerous << "#";
+		saveHeroes << heroList[i].rentInfo.rent << "#";
+		saveHeroes << heroList[i].rentInfo.damage << "#";
+		saveHeroes << heroList[i].rentInfo.years << "#";
+	}
+	saveHeroes.close();
+	
+	cout << endl << endl << "Your superheroes were successfully saved to the " << saveFile << " file." << endl << endl;
+}
+
+
+float convertToFloat(string heroInfo)
+{
+	istringstream i(heroInfo);
+	float x;
+	if(!(i >> x))
+		x = 0;
+	return x;
+}

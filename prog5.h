@@ -1,5 +1,5 @@
 //  Author:  Tammy O'Brien
-//  Date:  18 November 2018
+//  Date:  December 03, 2018
 //  Program:  5
 //  Purpose:  Header file for the superhero condo program
 
@@ -18,6 +18,7 @@
 using namespace std;
 
 
+//  DEFINE STRUCTURES
 struct Rent
 {
 	float rent;
@@ -36,12 +37,14 @@ struct Heroes
 
 int enterHeroes(int maxHeroes, int & currentHeroes, Heroes* &heroList);
 
-// void deleteHero(int & currentHeroes, string heroList[]);
+void deleteHero(int & currentHeroes, Heroes* &heroList);
 
-// void printHeroes();
+void printHeroes(int currentHeroes, Heroes* &heroList);
 
-// void printRentDetails();
+void printRentDetails(int currentHeroes, Heroes* &heroList);
 
-// void saveToFile(int currentHeroes, string heroList[]);
+void saveToFile(int currentHeroes, Heroes* &heroList);
+
+float convertToFloat(string s);
 
 #endif

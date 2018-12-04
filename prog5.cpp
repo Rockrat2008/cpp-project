@@ -1,5 +1,5 @@
 //  Author:  Tammy O'Brien
-//  Date:  18 November 2018
+//  Date:  December 03, 2018
 //  Program:  5
 //  Purpose:  Main program file for the superhero condo program
 
@@ -8,16 +8,19 @@
 
 int main()
 {
+	//  VARIABLE DECLARATION
 	bool exitMenu = false;
-	char saveHero, saveFile;
+	char saveHero;
 	int currentHeroes = 0, maxHeroes = 0;
 	
-	cout << "How many superheoes can live in your condo complex?  ";
+	cout << endl << "How many superheoes can live in your condo complex?  ";
 	cin >> maxHeroes;
 	
+	//  SETUP STRUCTURES ARRAY
 	Heroes *heroList;
 	heroList = new Heroes[maxHeroes];
-//	Heroes heroList[maxHeroes];
+
+	//  MAIN LOOP FOR SUPERHERO CONDO PROGRAM
 	do
 	{
 		int menuChoice = 0;
@@ -42,16 +45,16 @@ int main()
 		switch(menuChoice)  //  Switch / Case loop to call function based on user menu choice
 		{
 			case 1 :
-				enterHeroes(currentHeroes, maxHeroes, heroList);
+				enterHeroes(maxHeroes, currentHeroes, heroList);
 				break;
 			case 2 :
-				cout << "Call deleteHero(currentHeroes, heroList);\n";
+				deleteHero(currentHeroes, heroList);
 				break;
 			case 3 :
-				cout << "Call printHeroes();\n";
+				printHeroes(currentHeroes, heroList);
 				break;
 			case 4 :
-				cout << "Call printRentDetails();\n";
+				printRentDetails(currentHeroes, heroList);
 				break;
 			case 5 :
 				exitMenu = true;
@@ -59,18 +62,15 @@ int main()
 		}	
 	}while(!exitMenu);
 	
+	//  CHECK IF USER WANTS TO SAVE SUPERHEROES TO FILE
 	cout << "Would you like to save your superheoes list to a file?  (y or n)  ";
 	cin >> saveHero;
 	
 	if(saveHero == 'y' || saveHero == 'Y')
 	{
-		cout << "What is the name of the file you want to save your creatures to?\n";
-		cout << "FILENAME:  ";
-		cin >> saveFile;
-		cout << "\n";
-		cout << "Call saveToFile(currentHeroes, heroList):\n\n";
+		saveToFile(currentHeroes, heroList);
 	}
-	
+	cout << endl;
 	cout << "GOODBYE!\n\n";
 	
 	return 0;
