@@ -35,6 +35,7 @@ struct Heroes
 };
 
 
+//  USER FUNCTIONS
 int enterHeroes(int maxHeroes, int & currentHeroes, Heroes* &heroList);
 
 void deleteHero(int & currentHeroes, Heroes* &heroList);

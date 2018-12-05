@@ -57,7 +57,7 @@ int enterHeroes(int maxHeroes, int & currentHeroes, Heroes* &heroList)
 						getline(heroesFile, isDangerous, '#');
 					//	heroList[currentHeroes].dangerous = isDangerous;
 						getline(heroesFile, heroInfo, '#');
-					//	convertToFloat(heroInfo);
+						convertToFloat(heroInfo);
 					//	heroList[currentHeroes].rentInfo.rent = heroInfo;
 						getline(heroesFile, heroInfo, '#');
 					//	convertToFloat(heroInfo);
@@ -151,6 +151,7 @@ int enterHeroes(int maxHeroes, int & currentHeroes, Heroes* &heroList)
 }
 
 
+//  FUNCTION TO DELETE A HERO FROM THE ARRAY
 void deleteHero(int & currentHeroes, Heroes* &heroList)
 {
 	string heroToKick;
@@ -171,19 +172,17 @@ void deleteHero(int & currentHeroes, Heroes* &heroList)
 	
 	for (int i = 0; i < currentHeroes; i++)
 	{
-		kickCounter++;
 		if (heroToKick == heroList[i].name)
 		{
+			kickCounter++;
 			for(int b = kickCounter; b < currentHeroes; b++)
 			{
-				cout << "OLD NAME:  " << heroList[i].name;
-				heroList[i].name = heroList[i+i].name;
-				cout << "NEW NAME:  " << heroList[i].name;
-				heroList[i].description = heroList[i+i].description;
-				heroList[i].dangerous = heroList[i+i].dangerous;
-				heroList[i].rentInfo.rent = heroList[i+i].rentInfo.rent;
-				heroList[i].rentInfo.damage = heroList[i+i].rentInfo.damage;
-				heroList[i].rentInfo.years = heroList[i+i].rentInfo.years;
+				heroList[b-1].name = heroList[b].name;
+				heroList[b-1].description = heroList[b].description;
+				heroList[b-1].dangerous = heroList[b].dangerous;
+				heroList[b-1].rentInfo.rent = heroList[b].rentInfo.rent;
+				heroList[b-1].rentInfo.damage = heroList[b].rentInfo.damage;
+				heroList[b-1].rentInfo.years = heroList[b].rentInfo.years;
 			}
 			cout << endl << "You have removed " << heroToKick << endl << endl;
 			currentHeroes--;
@@ -212,8 +211,8 @@ void printHeroes(int currentHeroes, Heroes* &heroList)
 		cout << setw(25) << std::left << "NAME" << setw(16) << std::left << heroList[i].name << endl;
 		cout << setw(25) << std::left << "DESCRIPTON" << setw(16) << std::left << heroList[i].description << endl;
 		cout << boolalpha << setw(25) << std::left << "DANGEROUS" << setw(16) << std::left << heroList[i].dangerous << endl;
-		cout << setw(25) << std::left << "RENT PRICE" << setw(15) << std::left << "$" << setw(1) << std::left << heroList[i].rentInfo.rent << endl;
-		cout << setw(25) << std::left << "DAMAGE COST" << setw(15) << std::left << "$" << setw(1) << std::left << heroList[i].rentInfo.damage << endl;
+		cout << setw(25) << std::left << "RENT PRICE" << std::right << "$" << setw(1) << std::left << heroList[i].rentInfo.rent << endl;
+		cout << setw(25) << std::left << "DAMAGE COST" << std::right << "$" << setw(1) << std::left << heroList[i].rentInfo.damage << endl;
 		cout << setw(25) << std::left << "YEARS" << setw(16) << std::left << heroList[i].rentInfo.years << endl << endl;
 		heroNbr++;
 	}
@@ -242,6 +241,7 @@ void printRentDetails(int currentHeroes, Heroes* &heroList)
 }
 
 
+//  FUNCTION TO SAVE THE USERS HEROES TO A FILE OF THEIR CHOICE
 void saveToFile(int currentHeroes, Heroes* &heroList)
 {
 	string saveFile;
