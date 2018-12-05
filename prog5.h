@@ -46,6 +46,6 @@ void printRentDetails(int currentHeroes, Heroes* &heroList);
 
 void saveToFile(int currentHeroes, Heroes* &heroList);
 
-float convertToFloat(string s);
+float convertToFloat(string heroInfo);
 
 #endif

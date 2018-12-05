@@ -57,17 +57,17 @@ int enterHeroes(int maxHeroes, int & currentHeroes, Heroes* &heroList)
 						getline(heroesFile, isDangerous, '#');
 					//	heroList[currentHeroes].dangerous = isDangerous;
 						getline(heroesFile, heroInfo, '#');
-						convertToFloat(heroInfo);
-					//	heroList[currentHeroes].rentInfo.rent = heroInfo;
+						cout << "Pre-Convert:  " << heroInfo << endl;
+						heroList[currentHeroes].rentInfo.rent = convertToFloat(heroInfo);
+						cout << "X Returned:  " << heroList[currentHeroes].rentInfo.rent << endl;
 						getline(heroesFile, heroInfo, '#');
-					//	convertToFloat(heroInfo);
-					//	heroList[currentHeroes].rentInfo.damage = heroInfo;
+						heroList[currentHeroes].rentInfo.damage = convertToFloat(heroInfo);
 						getline(heroesFile, heroInfo, '#');
-					//	convertToFloat[heroInfo);
-					//	heroList[currentHeroes].rentInfo.years = heroInfo;
+						heroList[currentHeroes].rentInfo.years = convertToFloat(heroInfo);
 						currentHeroes++;
 					}
 				}
+				cout << endl << endl;
 	
 				break;
 			}	
