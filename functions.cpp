@@ -71,10 +71,11 @@ int enterHeroes(int maxHeroes, int & currentHeroes, Heroes* &heroList)
 			}	
 			case 2 :
 			{
-				bool addMore = true, isDangerous = true;
+				bool addMore = true;
 				float rentAmt = 0, damageAmt = 0, nbrYears = 0;
-				char addAnother;
+				char addAnother, isDangerous;
 				string name, description;
+
 				do
 				{
 					cin.clear();
@@ -86,8 +87,6 @@ int enterHeroes(int maxHeroes, int & currentHeroes, Heroes* &heroList)
 					cin.sync();
 					getline(std::cin, description);
 					cout << endl << endl << "IS IT A DANGEROUS HERO?  (y or n):  ";
-					cin.clear();
-					cin.sync();
 					cin >> isDangerous;
 					cout << endl << endl <<  "How much does pay for rent per month?";
 					cout << endl << "RENT PRICE:  $";
@@ -104,15 +103,11 @@ int enterHeroes(int maxHeroes, int & currentHeroes, Heroes* &heroList)
 					cin.clear();
 					cin.sync();
 					cin >> nbrYears;
-					
-					if (isDangerous == 'y' || isDangerous == 'Y')
-						isDangerous = true;
-					else
-						isDangerous = false;
-					
+
+					isDangerous = toupper(isDangerous);
 					heroList[currentHeroes].name = name;
 					heroList[currentHeroes].description = description;
-					heroList[currentHeroes].dangerous = isDangerous;
+					heroList[currentHeroes].dangerous = (isDangerous != 'N');
 					heroList[currentHeroes].rentInfo.rent = rentAmt;
 					heroList[currentHeroes].rentInfo.damage = damageAmt;
 					heroList[currentHeroes].rentInfo.years = nbrYears;
