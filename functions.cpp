@@ -55,7 +55,7 @@ int enterHeroes(int maxHeroes, int & currentHeroes, Heroes* &heroList)
 						getline(heroesFile, heroDesc, '#');
 						heroList[currentHeroes].description = heroDesc;
 						getline(heroesFile, isDangerous, '#');
-					//	heroList[currentHeroes].dangerous = isDangerous;
+						heroList[currentHeroes].dangerous = (isDangerous != "0");
 						getline(heroesFile, heroInfo, '#');
 						heroList[currentHeroes].rentInfo.rent = convertToFloat(heroInfo);
 						getline(heroesFile, heroInfo, '#');
